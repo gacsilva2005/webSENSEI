@@ -1,4 +1,4 @@
-/* Garantir que todos os itens do menu fiquem na mesma linha */
+/* Garantir que todos os itens do menu fiquem na mesma grade */
 .hfe-nav-menu {
     display: flex !important;
     flex-wrap: nowrap !important;
