@@ -1,0 +1,25 @@
+/* Garantir que todos os itens do menu fiquem na mesma grade */
+.hfe-nav-menu {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+}
+
+/* Ajustar o layout dos itens do menu */
+.hfe-nav-menu li {
+    display: inline-block !important;
+    float: none !important;
+    white-space: nowrap !important;
+}
+
+/* Garantir que o container do menu não quebre linhas */
+.hfe-nav-menu__layout-horizontal {
+    overflow: visible !important;
+}
+
+/* Ajustes responsivos para telas menores */
+@media (max-width: 1024px) {
+    .hfe-nav-menu {
+        flex-wrap: wrap !important;
+    }
+}
