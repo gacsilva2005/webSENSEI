@@ -18,8 +18,11 @@ body {
     background-attachment: fixed;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     font-family: 'Roboto', sans-serif;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 0;
 }
 
 .header {
@@ -302,4 +305,223 @@ footer {
     .social-icons {
         justify-content: center;
     }
+}
+
+/*Main Container */
+main {
+    width: 90%;
+    max-width: 700px;
+    margin: 100px auto 40px;
+    padding: 2.5rem 3rem;
+    min-height: auto;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mensagem de Boas-Vindas */
+.welcome-section {
+    width: 100%;
+    max-width: 900px;
+    color: white;
+    padding: 3rem 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.welcome-title {
+    font-family: 'Roboto Slab', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #f1f5f9;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+}
+
+.welcome-subtitle {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #cbd5e1;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    line-height: 1.4;
+}
+
+.welcome-description {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    max-width: 800px;
+    margin: 0 auto 2.5rem;
+    position: relative;
+    z-index: 1;
+    padding: 1.8rem;
+    border-radius: 10px;
+    text-align: left;
+}
+
+/* Admin card de informações */
+.admin-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 1200px;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+    margin: 2rem auto 0;
+    justify-content: center;
+}
+
+.admin-info:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.admin-info i {
+    font-size: 2.2rem;
+    color: black;
+    background: rgba(63, 63, 63, 0.15);
+    padding: 1rem;
+    border-radius: 10px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.admin-info div {
+    flex: 1;
+    text-align: left;
+}
+
+.admin-info p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #f1f5f9;
+}
+
+.admin-info strong {
+    color: #ff0000;
+    font-weight: 600;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    main {
+        width: 95%;
+        margin: 80px auto 30px;
+        padding: 1.5rem 1.5rem;
+    }
+    
+    .welcome-section {
+        padding: 2rem 1.5rem;
+    }
+    
+    .welcome-title {
+        font-size: 2rem;
+    }
+    
+    .welcome-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .welcome-description {
+        font-size: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .admin-info {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .admin-info i {
+        font-size: 2rem;
+        padding: 0.8rem;
+        min-width: 55px;
+    }
+    
+    .admin-info div {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        width: 98%;
+        margin: 70px auto 20px;
+        padding: 1.2rem 1rem;
+    }
+    
+    .welcome-section {
+        padding: 1.5rem 1rem;
+    }
+    
+    .welcome-title {
+        font-size: 1.7rem;
+    }
+    
+    .welcome-description {
+        padding: 1.2rem;
+        font-size: 0.95rem;
+        text-align: center;
+    }
+    
+    .admin-info {
+        padding: 1.2rem;
+    }
+    
+    .admin-info i {
+        font-size: 1.8rem;
+        padding: 0.7rem;
+    }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.welcome-section,
+.admin-info {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.welcome-section {
+    animation-delay: 0.1s;
+}
+
+.admin-info {
+    animation-delay: 0.2s;
 }
