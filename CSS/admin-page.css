@@ -526,6 +526,136 @@ main {
     animation-delay: 0.2s;
 }
 
+/* Breadcrumb */
+.breadcrumb {
+    background: gray;
+    padding: 12px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    margin-top: 75px;
+}
+
+.breadcrumb-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.breadcrumb-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.breadcrumb-link:hover {
+    color: #ff0000;
+    transform: translateY(-1px);
+}
+
+.breadcrumb-link i {
+    font-size: 14px;
+}
+
+.breadcrumb-item.active span {
+    color: #ffffff;
+    font-weight: 600;
+    padding: 6px 12px;
+    background-color: rgba(52, 152, 219, 0.15);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.breadcrumb-separator {
+    color: #ffffff;
+    padding: 0 4px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-separator i {
+    font-size: 10px;
+}
+
+/* Responsividade do Breadcrumb */
+@media (max-width: 768px) {
+    .breadcrumb {
+        padding: 10px 15px;
+    }
+    
+    .breadcrumb-link {
+        padding: 4px 8px;
+        font-size: 13px;
+    }
+    
+    .breadcrumb-item.active span {
+        padding: 4px 8px;
+        font-size: 13px;
+    }
+    
+    .breadcrumb-link span:not(:first-child) {
+        display: none;
+    }
+    
+    .breadcrumb-link i {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .breadcrumb {
+        padding: 8px 10px;
+    }
+    
+    .breadcrumb-list {
+        font-size: 12px;
+    }
+    
+    .breadcrumb-link {
+        padding: 3px 6px;
+    }
+    
+    .breadcrumb-separator {
+        padding: 0 2px;
+    }
+}
+
+/* Animação do Breadcrumb */
+@keyframes breadcrumbFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.breadcrumb {
+    animation: breadcrumbFadeIn 0.5s ease-out;
+}
+
 /* Botão Voltar ao Topo */
 .back-to-top {
     position: fixed;
