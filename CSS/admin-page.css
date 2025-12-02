@@ -531,6 +531,8 @@ main {
     background: gray;
     padding: 12px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    margin-top: 75px;
 }
 
 .breadcrumb-container {
