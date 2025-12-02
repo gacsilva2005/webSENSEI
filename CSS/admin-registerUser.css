@@ -741,14 +741,13 @@ main {
 }
 
 .btn-submit {
-    background: linear-gradient(135deg, #2c3e50, #3498db);
+    background: linear-gradient(135deg, #d61c1c, #640808);
     color: white;
 }
 
 .btn-submit:hover {
-    background: linear-gradient(135deg, #3498db, #2c3e50);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .btn-submit:disabled {
