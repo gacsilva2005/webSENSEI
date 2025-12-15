@@ -1,5 +1,5 @@
 <?php
-require_once '../datBase.php';
+require_once '../dataBase.php';
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
