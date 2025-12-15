@@ -1,5 +1,5 @@
 <?php
-require_once '../datBase.php';
+require_once '../dataBase.php';
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
@@ -16,14 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $input = file_get_contents('php://input');
 $data = json_decode($input, true);
 
-// Verificar se veio JSON válido
 if (json_last_error() !== JSON_ERROR_NONE) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'JSON inválido']);
     exit;
 }
 
-// Validar campos obrigatórios
 if (empty($data['admin_email']) || empty($data['password'])) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Email e senha são obrigatórios']);
@@ -32,6 +30,13 @@ if (empty($data['admin_email']) || empty($data['password'])) {
 
 $email = trim($data['admin_email']);
 $senha = $data['password'];
+
+// Validação de email
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Email inválido']);
+    exit;
+}
 
 try {
     $db = Database::getInstance();
@@ -50,17 +55,17 @@ try {
     
     $admin = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    // Verificar se encontrou o administrador
     if (!$admin) {
+        // Mensagem genérica
         http_response_code(401);
         echo json_encode([
             'success' => false, 
-            'message' => 'Administrador não encontrado'
+            'message' => 'Credenciais inválidas'
         ]);
         exit;
     }
     
-    // Verificar se está ativo
+    // Verificar se a conta está ativa
     if ($admin['active'] != 1) {
         http_response_code(403);
         echo json_encode([
@@ -79,7 +84,7 @@ try {
         $session_token = bin2hex(random_bytes(32));
         $session_expires = date('Y-m-d H:i:s', strtotime('+8 hours'));
         
-        // Atualizar token de sessão no banco (opcional)
+        // Atualizar token de sessão no banco
         $updateStmt = $conn->prepare("
             UPDATE administrador 
             SET session_token = :token, session_expires = :expires 
@@ -92,13 +97,7 @@ try {
             ':id' => $admin['idadministrador']
         ]);
         
-        $logStmt->execute([
-            ':admin_id' => $admin['idadministrador'],
-            ':ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
-            ':agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'unknown'
-        ]);
-        
-        // Retornar sucesso
+        // Retornar sucesso (SEM LOGS)
         echo json_encode([
             'success' => true,
             'message' => 'Login realizado com sucesso!',
@@ -107,14 +106,15 @@ try {
                 'token' => $session_token,
                 'expires' => $session_expires
             ],
-            'redirect' => 'admin/admin-page.html'
+            'redirect' => '../HTML/admin/admin-page.html'
         ]);
         
     } else {
+        // Senha incorreta
         http_response_code(401);
         echo json_encode([
             'success' => false, 
-            'message' => 'Senha incorreta'
+            'message' => 'Credenciais inválidas'
         ]);
     }
     
@@ -122,8 +122,9 @@ try {
     http_response_code(500);
     echo json_encode([
         'success' => false, 
-        'message' => 'Erro no servidor: ' . $e->getMessage()
+        'message' => 'Erro no servidor. Tente novamente mais tarde.'
     ]);
-    error_log("Erro login admin: " . $e->getMessage());
+
+    error_log("Erro no login admin: " . $e->getMessage());
 }
 ?>
