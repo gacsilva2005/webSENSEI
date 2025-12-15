@@ -65,20 +65,7 @@ document.querySelector('.form').addEventListener('submit', async function(e) {
     }
 });
 
-// Preenchimento automático para testes (REMOVA EM PRODUÇÃO)
 window.addEventListener('load', function() {
-    // Verifica se estamos em ambiente de desenvolvimento
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        const inputs = document.querySelectorAll('.form input');
-        if (inputs[0] && inputs[1]) {
-            inputs[0].value = 'admin@senseidojo.com';
-            inputs[1].value = 'Admin123@';
-            
-            console.log('Credenciais de teste preenchidas automaticamente');
-            console.log('Email: admin@senseidojo.com | Senha: Admin123@');
-        }
-    }
-    
     // Verifica se já está logado
     const token = localStorage.getItem('admin_token');
     if (token) {
