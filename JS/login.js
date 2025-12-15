@@ -64,17 +64,3 @@ document.querySelector('.form').addEventListener('submit', async function(e) {
         botao.disabled = false;
     }
 });
-
-window.addEventListener('load', function() {
-    // Verifica se já está logado
-    const token = localStorage.getItem('admin_token');
-    if (token) {
-        // Verifica se o token ainda é válido (implementação básica)
-        // Em produção, você deve validar com a API
-        const adminData = localStorage.getItem('admin_data');
-        if (adminData) {
-            console.log('Já está logado, redirecionando...');
-            window.location.href = '../HTML/admin/admin-page.html';
-        }
-    }
-});
