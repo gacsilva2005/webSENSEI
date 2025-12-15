@@ -11,7 +11,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `senseidojo_db` DEFAULT CHARACTER SET utf8 ;
 -- -----------------------------------------------------
 -- Schema senseidojo_db
 -- -----------------------------------------------------
@@ -20,28 +20,12 @@ CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 -- Schema senseidojo_db
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `senseidojo_db` DEFAULT CHARACTER SET utf8mb3 ;
-USE `mydb` ;
+USE `senseidojo_db` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`administrador`
+-- Table `senseidojo_db`.`usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`administrador` (
-  `idadministrador` INT NOT NULL AUTO_INCREMENT,
-  `admin_name` VARCHAR(60) NOT NULL,
-  `password_hash` VARCHAR(255) NOT NULL,
-  `active` TINYINT NOT NULL DEFAULT 1,
-  `admin_email` VARCHAR(120) NOT NULL,
-  `acess_level` ENUM('master', 'gerente', 'financeiro', 'operacional') NULL DEFAULT 'operacional',
-  `photo_perfil` VARCHAR(255) NULL,
-  PRIMARY KEY (`idadministrador`),
-  UNIQUE INDEX `admin_email_UNIQUE` (`admin_email` ASC) VISIBLE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`usuario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
+CREATE TABLE IF NOT EXISTS `senseidojo_db`.`usuario` (
   `idusuario` INT NOT NULL AUTO_INCREMENT,
   `acess_type` ENUM('professor', 'aluno') NOT NULL,
   `user_name` VARCHAR(100) NOT NULL,
@@ -57,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
   INDEX `fk_usuario_administrador_idx` (`administrador_idadministrador` ASC) VISIBLE,
   CONSTRAINT `fk_usuario_administrador`
     FOREIGN KEY (`administrador_idadministrador`)
-    REFERENCES `mydb`.`administrador` (`idadministrador`)
+    REFERENCES `senseidojo_db`.`administrador` (`idadministrador`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -74,6 +58,8 @@ CREATE TABLE IF NOT EXISTS `senseidojo_db`.`administrador` (
   `admin_email` VARCHAR(120) NOT NULL,
   `acess_level` ENUM('master', 'operacional') NULL DEFAULT 'operacional',
   `photo_perfil` VARCHAR(255) NULL DEFAULT NULL,
+  `session_token` VARCHAR(64) NULL,
+  `session_expires` DATETIME NULL,
   PRIMARY KEY (`idadministrador`),
   UNIQUE INDEX `admin_email_UNIQUE` (`admin_email` ASC) VISIBLE)
 ENGINE = InnoDB
@@ -105,7 +91,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`professor`
+-- Table `senseidojo_db`.`professor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `senseidojo_db`.`professor` (
   `idprofessor` INT NOT NULL AUTO_INCREMENT,
@@ -123,7 +109,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`aluno`
+-- Table `senseidojo_db`.`aluno`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `senseidojo_db`.`aluno` (
   `idaluno` INT NOT NULL,
