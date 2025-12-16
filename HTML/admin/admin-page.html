@@ -48,19 +48,27 @@
         </a>
     </header>
 
-            <!-- Breadcrumb - Adicionar após o header -->
-        <nav class="breadcrumb" aria-label="breadcrumb">
-            <div class="breadcrumb-container">
-                <ol class="breadcrumb-list">
-                    <li class="breadcrumb-item">
-                        <a href="#" class="breadcrumb-link">
-                            <i class="fas fa-home"></i>
-                            <span>Início</span>
-                        </a>
-                    </li>
-                </ol>
+    <!-- Breadcrumb with lougout button -->
+    <nav class="breadcrumb" aria-label="breadcrumb">
+        <div class="breadcrumb-container">
+            <ol class="breadcrumb-list">
+                <li class="breadcrumb-item">
+                    <a href="#" class="breadcrumb-link">
+                        <i class="fas fa-home"></i>
+                        <span>Início</span>
+                    </a>
+                </li>
+            </ol>
+
+            <!-- Botão de Logout -->
+            <div class="logout-container">
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </button>
             </div>
-        </nav>
+        </div>
+    </nav>
 
     <main>
         <!-- Seção de Boas Vindas -->
@@ -156,7 +164,52 @@
     <button id="backToTopBtn" class="back-to-top" aria-label="Voltar ao topo">
         <i class="fas fa-chevron-up"></i>
     </button>
+
+    <!-- Popup de logout -->
+    <div id="logoutPopup" class="logout-popup">
+        <div class="popup-overlay"></div>
+        <div class="popup-container">
+            <div class="popup-header">
+                <i class="fas fa-sign-out-alt"></i>
+                <h3>Confirmar Saída</h3>
+                <button class="popup-close">&times;</button>
+            </div>
+            
+            <div class="popup-body">
+                <div class="admin-info-popup">
+                    <div class="admin-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="admin-details">
+                        <p class="admin-greeting">Olá, <span id="adminNamePopup"></span>!</p>
+                        <p class="admin-email" id="adminEmailPopup"></p>
+                    </div>
+                </div>
+                
+                <div class="popup-message">
+                    <p>Tem certeza que deseja sair do sistema?</p>
+                    <p class="warning-text">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Você será redirecionado para a página de login.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="popup-footer">
+                <button id="popupCancelBtn" class="btn-cancel">
+                    <i class="fas fa-times"></i>
+                    Cancelar
+                </button>
+                <button id="popupConfirmBtn" class="btn-confirm">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sim, Sair
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="../../JS/back-to-top.js"></script>
 <script src="../../JS/menu-toggle.JS"></script>
+<script src="../../JS/logout.js"></script>
+
 </html>
