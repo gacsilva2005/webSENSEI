@@ -340,32 +340,38 @@ section {
     color: var(--primary-dark);
 }
 
-/* Seção Professores */
+/* Seção Professores - Design Limpo (SEM BOTÃO) */
 .teachers {
-    background-color: white;
+    background-color: #f8f9fa;
+    padding: 80px 0;
 }
 
 .teachers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
 }
 
 .teacher-card {
-    background-color: #f9f9f9;
-    border-radius: 8px;
+    background-color: white;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 .teacher-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .teacher-image {
-    height: 250px;
+    position: relative;
+    height: 600px;
     overflow: hidden;
 }
 
@@ -373,49 +379,253 @@ section {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transition);
+    transition: transform 0.5s ease;
 }
 
 .teacher-card:hover .teacher-image img {
     transform: scale(1.05);
 }
 
-.teacher-info {
-    padding: 25px;
+.teacher-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 30px 25px;
+    color: white;
 }
 
-.teacher-info h3 {
+.teacher-card:hover .teacher-overlay {
+    opacity: 1;
+}
+
+.teacher-overlay .teacher-info {
+    transform: translateY(20px);
+    transition: transform 0.5s ease;
+    width: 100%;
+}
+
+.teacher-card:hover .teacher-overlay .teacher-info {
+    transform: translateY(0);
+}
+
+.teacher-overlay h3 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-bottom: 10px;
-    color: var(--secondary-color);
+    color: white;
 }
 
-.teacher-title {
-    color: var(--primary-color);
+.teacher-overlay .teacher-title {
+    color: #ffcc00;
     font-weight: 600;
+    font-size: 0.95rem;
     margin-bottom: 8px;
 }
 
-.teacher-belt {
-    color: var(--gray-color);
+.teacher-overlay .teacher-belt {
+    color: #ddd;
+    font-size: 0.85rem;
     margin-bottom: 20px;
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    border-left: 3px solid var(--primary-color);
 }
 
-.btn-teacher {
-    display: inline-block;
+.teacher-overlay .teacher-achievements {
+    max-height: 210px;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 15px;
+}
+
+.teacher-overlay .teacher-achievements p {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    color: #ffcc00;
+    font-weight: 600;
+}
+
+.teacher-overlay .teacher-achievements ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.teacher-overlay .teacher-achievements li {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+    padding-left: 15px;
+    position: relative;
+    line-height: 1.4;
+    color: #eee;
+}
+
+.teacher-overlay .teacher-achievements li:before {
+    content: "•";
+    color: var(--primary-color);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+.teacher-name {
+    padding: 25px;
+    background-color: white;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-top: 3px solid var(--primary-color);
+    text-align: center;
+}
+
+.teacher-name h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4rem;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.teacher-name p {
+    color: var(--gray-color);
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* Badge de faixa no card (mantido) */
+.teacher-card:before {
+    content: attr(data-belt);
+    position: absolute;
+    top: 20px;
+    right: 20px;
     background-color: var(--primary-color);
     color: white;
-    padding: 10px 20px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    z-index: 2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.btn-teacher:hover {
-    background-color: var(--primary-dark);
+/* Estilização da scrollbar (mantida) */
+.teacher-overlay .teacher-achievements::-webkit-scrollbar {
+    width: 4px;
 }
+
+.teacher-overlay .teacher-achievements::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+.teacher-overlay .teacher-achievements::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.teacher-overlay .teacher-achievements::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+    .teachers-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .teachers-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .teacher-image{
+        height: 500px;
+    }
+    
+    .teacher-name {
+        padding: 20px;
+    }
+    
+    .teacher-name h3 {
+        font-size: 1.2rem;
+    }
+    
+    .teacher-overlay {
+        padding: 25px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .teachers-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .teacher-image{
+        height: 500px;
+    }
+    
+    .teacher-overlay {
+        padding: 20px 15px;
+    }
+
+    .teacher-info{
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .teachers-grid {
+        grid-template-columns: 1fr;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    
+    .teacher-card {
+        max-width: 100%;
+    }
+    
+    .teacher-image{
+        height: 500px;
+    }
+}
+
+/* Animações (mantidas) */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.teacher-card {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Delay para cada card */
+.teacher-card:nth-child(1) { animation-delay: 0.1s; }
+.teacher-card:nth-child(2) { animation-delay: 0.2s; }
+.teacher-card:nth-child(3) { animation-delay: 0.3s; }
+.teacher-card:nth-child(4) { animation-delay: 0.4s; }
+.teacher-card:nth-child(5) { animation-delay: 0.5s; }
+.teacher-card:nth-child(6) { animation-delay: 0.6s; }
+.teacher-card:nth-child(7) { animation-delay: 0.7s; }
 
 /* Documentário */
 .documentary {
