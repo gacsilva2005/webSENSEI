@@ -667,53 +667,429 @@ section {
     line-height: 1.7;
 }
 
-/* Horários */
-.schedule {
-    background-color: #f0f0f0;
+/* Estilos da grade de horários - DESKTOP */
+.schedule-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    width: 100%;
 }
 
-.table-responsive {
-    overflow-x: auto;
-    margin-bottom: 30px;
+.schedule-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #000000;
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    position: relative;
+    padding-bottom: 10px;
 }
 
-table {
+.schedule-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background-color: #ff0000;
+}
+
+/* Tabela para desktop */
+.schedule-table-container {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.438);
+    background-color: white;
+}
+
+.schedule-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: white;
-    box-shadow: var(--shadow);
-    border-radius: 8px;
-    overflow: hidden;
 }
 
-thead {
-    background-color: var(--primary-color);
+.schedule-table th {
+    background-color: #222;
     color: white;
+    padding: 1.2rem 0.5rem;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.1rem;
+    border-right: 1px solid #333;
 }
 
-th, td {
-    padding: 15px;
-    text-align: left;
+.schedule-table th:last-child {
+    border-right: none;
+}
+
+.schedule-table td {
+    padding: 1.5rem 0.5rem;
+    text-align: center;
+    vertical-align: top;
+    border-right: 1px solid #eee;
     border-bottom: 1px solid #eee;
 }
 
-tbody tr:hover {
-    background-color: #f5f5f5;
+.schedule-table td:last-child {
+    border-right: none;
 }
 
-.schedule-note {
-    background-color: white;
-    padding: 20px;
+.schedule-table tr:last-child td {
+    border-bottom: none;
+}
+
+.schedule-table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Cards de atividades */
+.activity-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    padding: 10px;
     border-radius: 8px;
-    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.activity-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.activity-name {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #222;
+    text-align: center;
+}
+
+.activity-time {
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: #ff0000;
+    margin-bottom: 5px;
+}
+
+.activity-age {
+    font-size: 0.85rem;
+    color: #666;
+    background-color: #f0f0f0;
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.combined-activity .activity-name {
+    font-size: 1rem;
+    line-height: 1.3;
+}
+
+/* Cores diferentes para cada atividade */
+.boxe-card {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-top: 4px solid #ff0000;
+}
+
+.kickboxing-card {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-top: 4px solid #ff0000;
+}
+
+.karate-card {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-top: 4px solid #ff0000;
+}
+
+.jiujitsu-card {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-top: 4px solid #ff0000;
+}
+
+.combined-card {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-top: 4px solid #ff0000;
+}
+
+/* Botões de ação */
+.schedule-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+
+.action-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 8px;
+    transition: all 0.3s;
 }
 
-.schedule-note i {
-    color: var(--primary-color);
+.edit-btn {
+    background-color: #db3434;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #b92929;
+}
+
+/* ACORDEÃO PARA MOBILE */
+.schedule-accordion {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.day-accordion-item {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.day-header {
+    background-color: #222;
+    color: white;
+    padding: 1.2rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.day-header:hover {
+    background-color: #333;
+}
+
+.day-header.active {
+    background-color: #444;
+}
+
+.accordion-toggle {
     font-size: 1.5rem;
+    transition: transform 0.3s;
+}
+
+.day-header.active .accordion-toggle {
+    transform: rotate(45deg);
+}
+
+.day-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+
+.day-content.active {
+    max-height: 1000px;
+}
+
+.day-activities {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.day-activity {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.2rem;
+    border-left: 4px solid #ff0000;
+}
+
+.day-activity-name {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #222;
+    margin-bottom: 0.5rem;
+}
+
+.day-activity-time {
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: #ff0000;
+    margin-bottom: 0.5rem;
+}
+
+.day-activity-age {
+    font-size: 0.85rem;
+    color: #666;
+    background-color: #f0f0f0;
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+    .schedule-table th,
+    .schedule-table td {
+        padding: 1rem 0.5rem;
+    }
+    
+    .activity-card {
+        min-height: 110px;
+        padding: 8px;
+    }
+    
+    .activity-name {
+        font-size: 1.1rem;
+    }
+    
+    .activity-time {
+        font-size: 1.2rem;
+    }
+}
+
+/* Mobile (até 768px) - Acordeão ativo */
+@media (max-width: 768px) {
+    /* Header mobile */
+    .header {
+        padding: 1rem;
+    }
+    
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #000000;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .nav-menu.active {
+        display: flex;
+    }
+    
+    .agende-btn {
+        display: none;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    /* Breadcrumb mobile */
+    .breadcrumb {
+        padding: 10px 15px;
+        margin-top: 70px;
+    }
+    
+    .breadcrumb-link {
+        padding: 4px 8px;
+        font-size: 13px;
+    }
+    
+    .breadcrumb-link span:not(:first-child) {
+        display: none;
+    }
+    
+    .breadcrumb-link i {
+        margin-right: 0;
+    }
+    
+    /* Esconder tabela, mostrar acordeão */
+    .schedule-table-container {
+        display: none;
+    }
+    
+    .schedule-accordion {
+        display: flex;
+    }
+    
+    .schedule-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .schedule-actions {
+        justify-content: center;
+    }
+    
+    /* Footer mobile */
+    .footer-content {
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+    
+    .social-icons {
+        justify-content: center;
+    }
+    
+    /* Botão voltar ao topo mobile */
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+}
+
+/* Mobile pequeno (até 480px) */
+@media (max-width: 480px) {
+    .schedule-title {
+        font-size: 1.5rem;
+    }
+    
+    .day-header {
+        padding: 1rem;
+        font-size: 1.1rem;
+    }
+    
+    .day-activities {
+        padding: 1rem;
+    }
+    
+    .day-activity {
+        padding: 1rem;
+    }
+    
+    .day-activity-name {
+        font-size: 1.1rem;
+    }
+    
+    .day-activity-time {
+        font-size: 1.3rem;
+    }
+    
+    .breadcrumb {
+        padding: 8px 10px;
+    }
+    
+    .breadcrumb-list {
+        font-size: 12px;
+    }
+    
+    .back-to-top {
+        bottom: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
 }
 
 /* Galeria */
@@ -793,7 +1169,7 @@ footer {
 }
 
 .social-title {
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Roboto', sans-serif;
     color: white;
     margin-bottom: 1.5rem;
     font-size: 1.2rem;
@@ -861,7 +1237,7 @@ footer {
 }
 
 .contact-title {
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Roboto', sans-serif;
     color: white;
     margin-bottom: 1.5rem;
     font-size: 1.2rem;
@@ -967,16 +1343,17 @@ footer {
     }
 
     .nav-link {
-        margin: 10px 0;
-        padding: 15px;
-        display: block;
+        padding: 0;
+        display: flex;
     }
     
     .btn-login, .btn-agendar {
-        margin: 10px auto;
+        margin: 10px 25px;
         display: block;
         width: 80%;
         text-align: center;
+        justify-content: center;
+        align-items: center;
     }
 
     .menu-toggle {
