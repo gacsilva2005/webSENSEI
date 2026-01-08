@@ -121,17 +121,21 @@ section {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     transition: var(--transition);
     height: 70px;
+    display: flex;
+    align-items: center;
 }
 
 .navbar {
-    padding: 0px;
-    margin-left: 12%;
+    width: 100%;
+    margin-left: 0;
 }
 
 .nav-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    height: 100%;
+    padding: 0 20px;
 }
 
 .nav-menu {
@@ -139,6 +143,8 @@ section {
     list-style: none;
     align-items: center;
     height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-link {
