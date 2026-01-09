@@ -853,10 +853,6 @@ section {
     .teacher-overlay {
         padding: 20px 15px;
     }
-
-    .teacher-info {
-        display: none;
-    }
 }
 
 @media (max-width: 576px) {
