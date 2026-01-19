@@ -82,7 +82,7 @@ try {
         
         // Gerar token de sessão
         $session_token = bin2hex(random_bytes(32));
-        $session_expires = date('Y-m-d H:i:s', strtotime('+8 hours'));
+        $session_expires = date('Y-m-d H:i:s', strtotime('+1 hour'));
         
         // Atualizar token de sessão no banco
         $updateStmt = $conn->prepare("
