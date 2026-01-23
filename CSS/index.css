@@ -164,7 +164,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
+    height: auto;
     margin-left: 15px;
     white-space: nowrap;
 }
@@ -1418,9 +1418,9 @@ footer {
 
     .btn-login,
     .btn-agendar {
-        margin: 10px 25px;
+        margin: 0 25px;
         display: block;
-        width: 80%;
+        width: auto;
         text-align: center;
         justify-content: center;
         align-items: center;
