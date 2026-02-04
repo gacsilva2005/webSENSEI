@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Sistema de gerenciamento financeiro da academia Sensei Dojo. Controle de pagamentos, devedores e informações dos alunos." />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../CSS/admin-finance.css">
+    <title>Finanças - Sensei Dojo</title>
+</head>
+
+<body>
+    <header class="header">
+        <!-- Logo -->
+        <div class="logo-container">
+            <img src="https://senseidojo.com.br/wp-content/uploads/elementor/thumbs/logo-sensei-dojo-qb8pmf7tw8dep7kwn0qagj1piwlsd2tdkhjwhp8c28.png"
+                alt="Logo Sensei Dojo" title="Logo do Sensei Dojo">
+        </div>
+
+        <!-- Menu de Navegação -->
+        <nav>
+            <button class="menu-toggle">☰</button>
+            <ul class="nav-menu">
+                <li><a href="admin-page.html">Início</a></li>
+                <li><a href="admin-registerUser.html">Cadastrar usuários</a></li>
+                <li><a href="#">Calendário anual</a></li>
+                <li><a href="#" class="active">Finanças</a></li>
+                <li><a href="admin-horarios.html">Horarios</a></li>
+                <li><a href="#">O Instituto</a></li>
+                <li><a href="#">Galeria</a></li>
+            </ul>
+        </nav>
+
+        <!-- Botão Agende uma Aula -->
+        <a href="https://wa.me//5511994027543?text=Ola,%20vim%20pelo%20site%20e%20gostaria%20de%20mais%20informações"
+            class="agende-btn">
+            <svg width="16" height="16" viewBox="0 0 448 512" style="fill: currentColor;">
+                <path
+                    d="M400 64h-48V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H160V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V160h352v298c0 3.3-2.7 6-6 6z" />
+            </svg>
+            Agende Uma Aula
+        </a>
+    </header>
+
+    <main>
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="breadcrumb">
+            <div class="breadcrumb-container">
+                <ol class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="admin-page.html" class="breadcrumb-link">
+                            <i class="fas fa-home"></i>
+                            <span>Início</span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-separator"><i class="fas fa-chevron-right"></i></li>
+                    <li class="breadcrumb-item">
+                        <a href="#" class="breadcrumb-link">
+                            <span>Finanças</span>
+                        </a>
+                    </li>
+                </ol>
+
+                <!-- Botão de Logout -->
+                <div class="logout-container">
+                    <button id="logoutBtn" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Sair</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+     <!-- Dashboard Container -->
+        <div class="dashboard-container">
+            <!-- Page Header -->
+            <header class="page-header">
+                <h1 class="page-title">Painel de Finanças</h1>
+                <p class="page-subtitle">Gerencie pagamentos, visualize devedores e monitore a situação financeira dos alunos</p>
+                
+                <!-- Stats Overview -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon red">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Alunos em Débito</h3>
+                            <div class="stat-value" id="debt-count">12</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Total de Alunos</h3>
+                            <div class="stat-value" id="total-students">127</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Pagamentos em Dia</h3>
+                            <div class="stat-value" id="paid-count">115</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Receita Mensal</h3>
+                            <div class="stat-value">R$ 25.400</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Tabs Navigation -->
+            <div class="tabs">
+                <button class="tab-button active" data-tab="tab1">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Alunos em Débito
+                </button>
+                <button class="tab-button" data-tab="tab2">
+                    <i class="fas fa-users"></i>
+                    Todos os Alunos
+                </button>
+                <button class="tab-button" data-tab="tab3">
+                    <i class="fas fa-chart-pie"></i>
+                    Por Modalidade
+                </button>
+                <button class="tab-button" data-tab="tab4">
+                    <i class="fas fa-bell"></i>
+                    Notificações
+                </button>
+            </div>
+
+            <!-- Tab 1: Alunos em Débito -->
+            <div id="tab1" class="tab-content active">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="filter-debt">Filtrar por:</label>
+                        <select id="filter-debt">
+                            <option value="all">Todos os Devedores</option>
+                            <option value="30">Atraso 30+ dias</option>
+                            <option value="60">Atraso 60+ dias</option>
+                            <option value="90">Atraso 90+ dias</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="search-debt">Buscar:</label>
+                        <input type="text" id="search-debt" placeholder="Nome do aluno...">
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aluno</th>
+                                <th>Modalidade</th>
+                                <th>Faixa</th>
+                                <th>Plano</th>
+                                <th>Dias em Atraso</th>
+                                <th>Valor Devido</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="debt-table-body">
+                            <!-- Os dados serão preenchidos via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab 2: Todos os Alunos -->
+            <div id="tab2" class="tab-content">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="filter-status">Status:</label>
+                        <select id="filter-status">
+                            <option value="all">Todos</option>
+                            <option value="paid">Em dia</option>
+                            <option value="overdue">Em débito</option>
+                            <option value="pending">Pendente</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-modality">Modalidade:</label>
+                        <select id="filter-modality">
+                            <option value="all">Todas</option>
+                            <option value="karate">Karatê</option>
+                            <option value="jiu-jitsu">Jiu-Jitsu</option>
+                            <option value="kick-boxing">Kick-Boxing</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="search-all">Buscar:</label>
+                        <input type="text" id="search-all" placeholder="Nome, faixa ou modalidade...">
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aluno</th>
+                                <th>Modalidade</th>
+                                <th>Faixa</th>
+                                <th>Plano</th>
+                                <th>Último Pagamento</th>
+                                <th>Próximo Vencimento</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-students-table-body">
+                            <!-- Os dados serão preenchidos via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab 3: Por Modalidade -->
+            <div id="tab3" class="tab-content">
+                <div class="stats-grid" style="margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: #ff6b6b;">
+                            <i class="fas fa-fist-raised"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Karatê</h3>
+                            <div class="stat-value">58</div>
+                            <small>Alunos</small>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: #4ecdc4;">
+                            <i class="fas fa-user-ninja"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Jiu-Jitsu</h3>
+                            <div class="stat-value">42</div>
+                            <small>Alunos</small>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: #45b7d1;">
+                            <i class="fas fa-user-injured"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Kick-Boxing</h3>
+                            <div class="stat-value">18</div>
+                            <small>Alunos</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-bottom: 1rem;">Distribuição por Faixa (Karatê)</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Faixa</th>
+                                <th>Quantidade</th>
+                                <th>Porcentagem</th>
+                                <th>Status de Pagamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="belt-color belt-white"></span> Branca</td>
+                                <td>24</td>
+                                <td>41%</td>
+                                <td><span class="status-badge status-paid">22 em dia</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="belt-color belt-yellow"></span> Amarela</td>
+                                <td>18</td>
+                                <td>31%</td>
+                                <td><span class="status-badge status-paid">17 em dia</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="belt-color belt-orange"></span> Laranja</td>
+                                <td>8</td>
+                                <td>14%</td>
+                                <td><span class="status-badge status-paid">7 em dia</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="belt-color belt-green"></span> Verde</td>
+                                <td>5</td>
+                                <td>9%</td>
+                                <td><span class="status-badge status-paid">4 em dia</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="belt-color belt-blue"></span> Azul</td>
+                                <td>2</td>
+                                <td>3%</td>
+                                <td><span class="status-badge status-paid">2 em dia</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="belt-color belt-brown"></span> Marrom</td>
+                                <td>1</td>
+                                <td>2%</td>
+                                <td><span class="status-badge status-paid">1 em dia</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab 4: Notificações -->
+            <div id="tab4" class="tab-content">
+                <h3 style="margin-bottom: 1.5rem;">Notificações de Pagamento</h3>
+                <div style="background-color: #fff8e1; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #ffc107;">
+                    <h4 style="margin-bottom: 1rem; color: #856404;">
+                        <i class="fas fa-bell" style="margin-right: 0.5rem;"></i>
+                        Lembretes Importantes
+                    </h4>
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #ffecb3;">
+                            <i class="fas fa-exclamation-circle" style="color: #dc3545; margin-right: 0.5rem;"></i>
+                            <strong>3 alunos</strong> estão com mais de 60 dias de atraso
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #ffecb3;">
+                            <i class="fas fa-clock" style="color: #ffc107; margin-right: 0.5rem;"></i>
+                            <strong>7 pagamentos</strong> vencem amanhã
+                        </li>
+                        <li style="padding: 0.5rem 0;">
+                            <i class="fas fa-check-circle" style="color: #28a745; margin-right: 0.5rem;"></i>
+                            <strong>115 pagamentos</strong> realizados este mês
+                        </li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <h4 style="margin-bottom: 1rem;">Ações Rápidas</h4>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button style="padding: 0.8rem 1.5rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-envelope"></i> Enviar Lembretes
+                        </button>
+                        <button style="padding: 0.8rem 1.5rem; background-color: #17a2b8; color: white; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-file-export"></i> Exportar Relatório
+                        </button>
+                        <button style="padding: 0.8rem 1.5rem; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-print"></i> Imprimir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo-section">
+                <div class="footer-logo">
+                    <img src="../../Assets/images/Sensei_Dojo-logo_black.jpg" alt="Logo Sensei Dojo"
+                        title="Logo do Sensei Dojo">
+                </div>
+            </div>
+            <div class="footer-social-section">
+                <h3 class="social-title">Conecte-se Conosco:</h3>
+                <div class="social-icons">
+                    <a href="https://wa.me//5511994027543?text=Ola,%20vim%20pelo%20site%20e%20gostaria%20de%20mais%20informações"
+                        class="social-icon" target="_blank" title="WhatsApp">
+                        <div class="icon-circle whatsapp-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <span class="icon-label">WhatsApp</span>
+                    </a>
+
+                    <a href="https://www.facebook.com/senseidojobr" class="social-icon" target="_blank"
+                        title="Facebook">
+                        <div class="icon-circle facebook-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <span class="icon-label">Facebook</span>
+                    </a>
+
+                    <a href="https://www.waze.com/ul?ll=-23.607628%2C-46.690000&amp;navigate=yes&amp;zoom=17"
+                        class="social-icon" target="_blank" title="Waze">
+                        <div class="icon-circle waze-icon">
+                            <i class="fab fa-waze"></i>
+                        </div>
+                        <span class="icon-label">Waze</span>
+                    </a>
+
+                    <a href="https://www.facebook.com/profile.php?id=100090391417604" class="social-icon"
+                        target="_blank" title="Instagram">
+                        <div class="icon-circle instagram-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <span class="icon-label">Instagram</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-contact">
+                <h3 class="contact-title">Entre em Contato:</h3>
+                <ul class="contact-info">
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Av. Padre Antônio José dos Santos, 1361 - Brooklin, São Paulo - SP</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-phone"></i>
+                        <span>(11) 99402-7543</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-clock"></i>
+                        <span>Segunda a Sexta: 17h às 21:30h</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; SENSEI DOJO CENTRO DE FORMACAO DE LUTADORES LTDA - CNPJ 43386808000161 - Todos os direitos
+                Reservados 2023
+            </p>
+        </div>
+    </footer>
+    <button id="backToTopBtn" class="back-to-top" aria-label="Voltar ao topo">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+    
+    <!-- Popup de logout -->
+    <div id="logoutPopup" class="logout-popup">
+        <div class="popup-overlay"></div>
+        <div class="popup-container">
+            <div class="popup-header">
+                <i class="fas fa-sign-out-alt"></i>
+                <h3>Confirmar Saída</h3>
+                <button class="popup-close">&times;</button>
+            </div>
+            
+            <div class="popup-body">
+                <div class="admin-info-popup">
+                    <div class="admin-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="admin-details">
+                        <p class="admin-greeting">Olá, <span id="adminNamePopup"></span>!</p>
+                        <p class="admin-email" id="adminEmailPopup"></p>
+                    </div>
+                </div>
+                
+                <div class="popup-message">
+                    <p>Tem certeza que deseja sair do sistema?</p>
+                    <p class="warning-text">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Você será redirecionado para a página de login.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="popup-footer">
+                <button id="popupCancelBtn" class="btn-cancel">
+                    <i class="fas fa-times"></i>
+                    Cancelar
+                </button>
+                <button id="popupConfirmBtn" class="btn-confirm">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sim, Sair
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../JS/logout.js"></script>
+    <script src="../../JS/back-to-top.js"></script>
+
+    <script>
+        // Dados de exemplo para a tabela
+        const sampleStudents = [
+            { 
+                id: 1, 
+                name: "Carlos Silva", 
+                modality: "Karatê", 
+                belt: "Preta", 
+                plan: "Mensal", 
+                lastPayment: "15/03/2024", 
+                nextDue: "15/04/2024", 
+                status: "paid",
+                overdueDays: 0,
+                amountDue: 0,
+                beltColor: "black"
+            },
+            { 
+                id: 2, 
+                name: "Ana Santos", 
+                modality: "Jiu-Jitsu", 
+                belt: "Azul", 
+                plan: "Trimestral", 
+                lastPayment: "10/02/2024", 
+                nextDue: "10/05/2024", 
+                status: "overdue",
+                overdueDays: 45,
+                amountDue: 180,
+                beltColor: "blue"
+            },
+            { 
+                id: 3, 
+                name: "Pedro Costa", 
+                modality: "Karatê", 
+                belt: "Marrom", 
+                plan: "Anual", 
+                lastPayment: "28/03/2024", 
+                nextDue: "28/04/2024", 
+                status: "paid",
+                overdueDays: 0,
+                amountDue: 0,
+                beltColor: "brown"
+            },
+            { 
+                id: 4, 
+                name: "Mariana Lima", 
+                modality: "Kick Boxing", 
+                belt: "-", 
+                plan: "Mensal", 
+                lastPayment: "05/02/2024", 
+                nextDue: "05/03/2024", 
+                status: "overdue",
+                overdueDays: 65,
+                amountDue: 150,
+                beltColor: null
+            },
+            { 
+                id: 5, 
+                name: "João Oliveira", 
+                modality: "Karatê", 
+                belt: "Verde", 
+                plan: "Semestral", 
+                lastPayment: "20/01/2024", 
+                nextDue: "20/07/2024", 
+                status: "paid",
+                overdueDays: 0,
+                amountDue: 0,
+                beltColor: "green"
+            },
+            { 
+                id: 6, 
+                name: "Fernanda Souza", 
+                modality: "Jiu-Jitsu", 
+                belt: "Amarela", 
+                plan: "Mensal", 
+                lastPayment: "12/03/2024", 
+                nextDue: "12/04/2024", 
+                status: "pending",
+                overdueDays: 5,
+                amountDue: 120,
+                beltColor: "yellow"
+            },
+            { 
+                id: 7, 
+                name: "Ricardo Alves", 
+                modality: "Karatê", 
+                belt: "Laranja", 
+                plan: "Anual", 
+                lastPayment: "01/03/2024", 
+                nextDue: "01/04/2024", 
+                status: "paid",
+                overdueDays: 0,
+                amountDue: 0,
+                beltColor: "orange"
+            },
+            { 
+                id: 8, 
+                name: "Patrícia Mendes", 
+                modality: "Jiu-Jitsu", 
+                belt: "Roxa", 
+                plan: "Mensal", 
+                lastPayment: "28/02/2024", 
+                nextDue: "28/03/2024", 
+                status: "overdue",
+                overdueDays: 32,
+                amountDue: 160,
+                beltColor: null
+            },
+            { 
+                id: 9, 
+                name: "Roberto Santos", 
+                modality: "Karatê", 
+                belt: "Amarela", 
+                plan: "Trimestral", 
+                lastPayment: "15/02/2024", 
+                nextDue: "15/05/2024", 
+                status: "overdue",
+                overdueDays: 25,
+                amountDue: 200,
+                beltColor: "yellow"
+            },
+            { 
+                id: 10, 
+                name: "Camila Ferreira", 
+                modality: "Kick Boxing", 
+                belt: "-", 
+                plan: "Semestral", 
+                lastPayment: "10/01/2024", 
+                nextDue: "10/07/2024", 
+                status: "overdue",
+                overdueDays: 80,
+                amountDue: 300,
+                beltColor: null
+            }
+        ];
+
+        // Função para formatar valores monetários
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(value);
+        }
+
+        // Função para obter a classe CSS do plano
+        function getPlanClass(plan) {
+            const planClasses = {
+                'Mensal': 'plan-mensal',
+                'Semestral': 'plan-semestral',
+                'Anual': 'plan-anual',
+                'Trimestral': 'plan-trimestral'
+            };
+            return planClasses[plan] || 'plan-mensal';
+        }
+
+        // Função para renderizar a tabela de devedores
+        function renderDebtTable() {
+            const debtTableBody = document.getElementById('debt-table-body');
+            const overdueStudents = sampleStudents.filter(student => student.status === 'overdue' || student.status === 'pending');
+            
+            debtTableBody.innerHTML = '';
+            
+            overdueStudents.forEach(student => {
+                const statusClass = student.status === 'overdue' ? 'status-overdue' : 'status-pending';
+                const statusText = student.status === 'overdue' ? 'Em débito' : 'Pendente';
+                const planClass = getPlanClass(student.plan);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${student.name}</strong></td>
+                    <td><span class="modalidade-tag">${student.modality}</span></td>
+                    <td>
+                        ${student.beltColor ? `<span class="belt-color belt-${student.beltColor}"></span>` : ''}
+                        ${student.belt}
+                    </td>
+                    <td><span class="plan-badge ${planClass}">${student.plan}</span></td>
+                    <td>${student.overdueDays} dias</td>
+                    <td>${formatCurrency(student.amountDue)}</td>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td>
+                        <button onclick="sendNotification(${student.id})" style="background: none; border: none; color: #007bff; cursor: pointer; margin-right: 10px;">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                        <button onclick="markAsPaid(${student.id})" style="background: none; border: none; color: #28a745; cursor: pointer;">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </td>
+                `;
+                debtTableBody.appendChild(row);
+            });
+            
+            // Atualizar contador de devedores
+            document.getElementById('debt-count').textContent = overdueStudents.length;
+        }
+
+        // Função para renderizar a tabela de todos os alunos
+        function renderAllStudentsTable() {
+            const allStudentsTableBody = document.getElementById('all-students-table-body');
+            
+            allStudentsTableBody.innerHTML = '';
+            
+            sampleStudents.forEach(student => {
+                let statusClass, statusText;
+                
+                switch(student.status) {
+                    case 'paid':
+                        statusClass = 'status-paid';
+                        statusText = 'Em dia';
+                        break;
+                    case 'overdue':
+                        statusClass = 'status-overdue';
+                        statusText = 'Em débito';
+                        break;
+                    case 'pending':
+                        statusClass = 'status-pending';
+                        statusText = 'Pendente';
+                        break;
+                }
+                
+                const planClass = getPlanClass(student.plan);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${student.name}</strong></td>
+                    <td><span class="modalidade-tag">${student.modality}</span></td>
+                    <td>
+                        ${student.beltColor ? `<span class="belt-color belt-${student.beltColor}"></span>` : ''}
+                        ${student.belt}
+                    </td>
+                    <td><span class="plan-badge ${planClass}">${student.plan}</span></td>
+                    <td>${student.lastPayment}</td>
+                    <td>${student.nextDue}</td>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                `;
+                allStudentsTableBody.appendChild(row);
+            });
+            
+            // Atualizar contadores
+            const paidCount = sampleStudents.filter(student => student.status === 'paid').length;
+            document.getElementById('total-students').textContent = sampleStudents.length;
+            document.getElementById('paid-count').textContent = paidCount;
+        }
+
+        // Funções de ação
+        function sendNotification(studentId) {
+            alert(`Notificação enviada para o aluno ID: ${studentId}`);
+            // Em uma aplicação real, aqui seria uma chamada à API
+        }
+
+        function markAsPaid(studentId) {
+            if (confirm('Marcar este pagamento como realizado?')) {
+                const student = sampleStudents.find(s => s.id === studentId);
+                if (student) {
+                    student.status = 'paid';
+                    student.overdueDays = 0;
+                    student.amountDue = 0;
+                    renderDebtTable();
+                    renderAllStudentsTable();
+                    alert('Pagamento registrado com sucesso!');
+                }
+            }
+        }
+
+        // Sistema de abas
+        function initTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    button.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+
+        // Sistema de filtros
+        function initFilters() {
+            const filterDebt = document.getElementById('filter-debt');
+            const searchDebt = document.getElementById('search-debt');
+            const filterStatus = document.getElementById('filter-status');
+            const filterModality = document.getElementById('filter-modality');
+            const searchAll = document.getElementById('search-all');
+            
+            // Em uma aplicação real, esses filtros teriam lógica mais complexa
+            [filterDebt, searchDebt, filterStatus, filterModality, searchAll].forEach(filter => {
+                filter.addEventListener('change', () => {
+                    console.log('Filtro aplicado:', filter.value || filter.placeholder);
+                    // Aqui você implementaria a lógica de filtragem real
+                });
+            });
+        }
+
+        // Botão Voltar ao Topo
+        function initBackToTop() {
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // Menu mobile toggle
+        function initMobileMenu() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+                
+                // Fechar menu ao clicar fora
+                document.addEventListener('click', (event) => {
+                    if (!event.target.closest('nav') && window.innerWidth <= 768) {
+                        navMenu.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDebtTable();
+            renderAllStudentsTable();
+            initTabs();
+            initFilters();
+            initBackToTop();
+            initMobileMenu();
+            
+            console.log('Painel de finanças carregado com sucesso!');
+        });
+    </script>
+</body>
+
+</html>
